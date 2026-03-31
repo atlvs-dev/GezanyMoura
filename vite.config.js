@@ -8,4 +8,9 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: { // Adicione este bloco
+        watch: {
+            usePolling: true,
+        },
+    },
 });

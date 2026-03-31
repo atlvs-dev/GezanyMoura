@@ -1,153 +1,149 @@
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ config('app.name', 'ATLVS') }}</title>
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="min-h-screen bg-gray-50">
-  {{-- Top bar --}}
-  <header class="sticky top-0 z-30 border-b border-gray-200 bg-white/90 backdrop-blur">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="h-9 w-9 rounded-xl bg-gray-900 text-white grid place-items-center text-sm font-semibold">
-          A
+<x-atlvs.layout.app>
+    <section class="bg-white py-24 px-6 text-center border-b border-slate-100">
+        <h1 class="text-5xl font-extrabold text-slate-900 sm:text-7xl tracking-tight">
+            Gezany Moura
+        </h1>
+        <p class="mt-6 text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Desenvolvimento Comportamental e Liderança de Alta Performance. Capacitando líderes e equipes para impulsionar o crescimento pessoal e profissional.
+        </p>
+        <div class="mt-10 flex justify-center gap-4">
+            <x-atlvs.ui.button href="#servicos">
+                Ver Treinamentos
+            </x-atlvs.ui.button>
+            <x-atlvs.ui.button href="#contato" variant="secondary">
+                Falar no WhatsApp
+            </x-atlvs.ui.button>
         </div>
-        <div class="leading-tight">
-          <div class="text-sm font-semibold tracking-tight text-gray-900">ATLVS</div>
-          <div class="text-xs text-gray-500">Laravel Template</div>
+    </section>
+
+    <section id="sobre" class="py-20 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="relative">
+                    <div class="aspect-[4/5] bg-slate-100 rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
+                        <div class="flex items-center justify-center h-full text-slate-400 bg-slate-200">
+                            <span class="text-center px-4 font-medium italic">Foto Profissional<br>Gezany Moura</span>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 bg-blue-600 text-white p-8 rounded-2xl shadow-xl hidden md:block">
+                        <p class="text-4xl font-bold">+22</p>
+                        <p class="text-sm uppercase tracking-wider font-semibold">Anos de Mercado</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-8 flex items-center">
+                        <span class="w-8 h-1 bg-blue-600 mr-4"></span>
+                        Trajetória e Propósito
+                    </h2>
+                    <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+                        Atuo há mais de **22 anos na área administrativa comercial** e há mais de **16 anos no ensino superior** em Administração. Ajudo mulheres empreendedoras e profissionais a alavancar seus projetos por meio do autoconhecimento.
+                    </p>
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                        Desenvolvo carreiras de líderes que desejam expandir resultados com **segurança, clareza e estratégia**.
+                    </p>
+                    
+                    <ul class="grid grid-cols-1 gap-4">
+                        <li class="flex items-start bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <span class="text-blue-600 font-bold mr-3">✔</span>
+                            <span class="text-slate-700 font-medium">Mestranda em Educação (UFRRJ) e Especialista em Gestão de Pessoas.</span>
+                        </li>
+                        <li class="flex items-start bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <span class="text-blue-600 font-bold mr-3">✔</span>
+                            <span class="text-slate-700 font-medium">Master Analista Comportamental (IBC e ILG).</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
 
-      <nav class="flex items-center gap-2">
-        @auth
-          <a href="{{ route('admin.dashboard') }}"
-             class="h-9 px-3 rounded-xl bg-gray-900 text-white text-sm font-medium grid place-items-center hover:bg-gray-800">
-            Abrir painel
-          </a>
-        @else
-          @if (Route::has('login'))
-            <a href="{{ route('login') }}"
-               class="h-9 px-3 rounded-xl bg-gray-900 text-white text-sm font-medium grid place-items-center hover:bg-gray-800">
-              Entrar
-            </a>
-          @endif
-
-          @if (Route::has('register'))
-            <a href="{{ route('register') }}"
-               class="h-9 px-3 rounded-xl border border-gray-300 text-sm font-medium grid place-items-center hover:bg-gray-100">
-              Criar conta
-            </a>
-          @endif
-        @endauth
-      </nav>
-    </div>
-  </header>
-
-  {{-- Hero --}}
-  <main class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
-  {{-- Hero card --}}
-  <section class="relative overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
-    <div class="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-50"></div>
-    <div class="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-gray-900/5 blur-2xl"></div>
-    <div class="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-gray-900/5 blur-2xl"></div>
-
-    <div class="relative p-6 sm:p-10">
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-        <div class="space-y-4 max-w-2xl">
-          <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight text-gray-900">
-            Base oficial ATLVS para projetos em Laravel
-          </h1>
-
-          <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
-            Template pensado para a equipe desenvolver com consistência: Docker, Auth, RBAC, Admin e um CRUD de referência.
-            Menos decisões repetidas. Mais entrega.
-          </p>
-
-          <div class="flex flex-col sm:flex-row gap-3 pt-2">
-            @auth
-              <a href="{{ route('admin.projects.index') }}"
-                 class="h-10 px-4 rounded-xl bg-gray-900 text-white text-sm font-medium inline-flex items-center justify-center hover:bg-gray-800">
-                Ver projetos (CRUD)
-              </a>
-            @else
-              @if (Route::has('login'))
-                <a href="{{ route('login') }}"
-                   class="h-10 px-4 rounded-xl bg-gray-900 text-white text-sm font-medium inline-flex items-center justify-center hover:bg-gray-800">
-                  Entrar
-                </a>
-              @endif
-
-              @if (Route::has('register'))
-                <a href="{{ route('register') }}"
-                   class="h-10 px-4 rounded-xl border border-gray-300 text-sm font-medium inline-flex items-center justify-center hover:bg-gray-100">
-                  Criar conta
-                </a>
-              @endif
-            @endauth
-          </div>
+    <section class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold">Diferenciais que Geram Valor</h2>
+                <div class="h-1 w-20 bg-blue-500 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="space-y-4">
+                    <div class="text-4xl">🔬</div>
+                    <h3 class="text-xl font-bold italic">Embasamento Científico</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Experiência prática aliada a fundamentação teórica robusta.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="text-4xl">⚙</div>
+                    <h3 class="text-xl font-bold italic">Metodologia Estruturada</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Processos personalizados e metodologias exclusivas para cada líder.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="text-4xl">📊</div>
+                    <h3 class="text-xl font-bold italic">Foco em Resultados</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Desenvolvimento sustentável focado em resultados mensuráveis.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="text-4xl">🌱</div>
+                    <h3 class="text-xl font-bold italic">Qualidade de Vida</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Performance voltada para a saúde física e mental dos colaboradores.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        {{-- Quick facts --}}
-        <div class="grid grid-cols-2 gap-3 w-full lg:w-[360px]">
-          <div class="rounded-2xl border border-gray-200 bg-white/70 p-4">
-            <div class="text-xs text-gray-500">Auth</div>
-            <div class="text-sm font-semibold text-gray-900">Breeze (Blade)</div>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white/70 p-4">
-            <div class="text-xs text-gray-500">Acesso</div>
-            <div class="text-sm font-semibold text-gray-900">RBAC</div>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white/70 p-4">
-            <div class="text-xs text-gray-500">Infra</div>
-            <div class="text-sm font-semibold text-gray-900">Docker + Nginx</div>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white/70 p-4">
-            <div class="text-xs text-gray-500">Exemplo</div>
-            <div class="text-sm font-semibold text-gray-900">CRUD Projects</div>
-          </div>
+    <section id="servicos" class="py-20 bg-slate-50 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-slate-900">Portfólio de Soluções</h2>
+                <p class="text-slate-500 mt-2">Treinamentos estruturados para aumentar produtividade e engajamento.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                @foreach($services as $service)
+                    <x-atlvs.ui.card class="hover:shadow-2xl transition-shadow duration-300">
+                        <div class="p-8">
+                            <x-atlvs.ui.badge class="mb-4 bg-blue-100 text-blue-700">{{ $service->category }}</x-atlvs.ui.badge>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">{{ $service->title }}</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6">{{ $service->description }}</p>
+                            
+                            @if($service->duration)
+                                <div class="flex items-center text-xs font-bold text-slate-400 uppercase tracking-widest border-t border-slate-100 pt-4">
+                                    <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    Duração: {{ $service->duration }}
+                                </div>
+                            @endif
+                        </div>
+                    </x-atlvs.ui.card>
+                @endforeach
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  {{-- Feature grid --}}
-  @php($items = [
-    ['title' => 'Padrão de Pastas', 'desc' => 'Admin separado, components ATLVS e views organizadas por módulo.'],
-    ['title' => 'Form Requests', 'desc' => 'Validação fora do controller para manter o código limpo e testável.'],
-    ['title' => 'UI Reutilizável', 'desc' => 'Cards, badges, alerts e botões com identidade base.'],
-    ['title' => 'Pronto para escalar', 'desc' => 'Base ideal para adicionar Policies, Services e auditoria depois.'],
-  ])
-
-  <section class="mt-8">
-    <div class="flex items-end justify-between gap-4 mb-4">
-      <div>
-        <h2 class="text-base font-semibold text-gray-900">O que vem pronto</h2>
-        <p class="text-sm text-gray-600">Uma base moderna e consistente para começar qualquer projeto.</p>
-      </div>
-    </div>
-
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      @foreach($items as $it)
-        <div class="group rounded-2xl border border-gray-200 bg-white shadow-sm p-5 transition hover:-translate-y-0.5 hover:shadow-md">
-          <div class="flex items-start justify-between gap-3">
-            <div class="text-sm font-semibold text-gray-900">{{ $it['title'] }}</div>
-            <span class="h-8 w-8 rounded-xl bg-gray-900/5 grid place-items-center text-xs text-gray-700">
-              ✓
-            </span>
-          </div>
-          <div class="mt-2 text-sm text-gray-600 leading-relaxed">{{ $it['desc'] }}</div>
+    <section class="py-20 bg-white border-t border-slate-100">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-16 italic text-slate-900">Depoimentos</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="bg-slate-50 p-8 rounded-3xl relative">
+                    <p class="text-slate-600 italic mb-6">"A ferramenta utilizada me fez mudar a visão para com meus liderados. Gerou grande mudança na organização e nos trouxe resultados reais para a equipe."</p>
+                    <p class="font-bold text-slate-900">Sara Emília</p>
+                    <p class="text-sm text-blue-600 uppercase font-bold tracking-tighter">CEO - Habib's</p>
+                </div>
+                
+                <div class="bg-slate-50 p-8 rounded-3xl">
+                    <p class="text-slate-600 italic mb-6">"Foi maravilhoso descobrir que estou no caminho certo. Agora sei como gosto de ser reconhecida e como motivar minha equipe. Autoconhecimento é fundamental."</p>
+                    <p class="font-bold text-slate-900">Marluce Oliveira</p>
+                    <p class="text-sm text-blue-600 uppercase font-bold tracking-tighter">Gestora de RH</p>
+                </div>
+            </div>
         </div>
-      @endforeach
-    </div>
-  </section>
+    </section>
 
-  <footer class="pt-10 text-center text-xs text-gray-400">
-    © {{ date('Y') }} ATLVS — Template interno.
-  </footer>
-</main>
-
-</body>
-</html>
+    <footer id="contato" class="py-12 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <blockquote class="text-xl text-slate-700 italic max-w-3xl mx-auto mb-8">
+                "A tecnologia reinventará os negócios, mas as relações humanas continuarão sendo a chave do sucesso."
+            </blockquote>
+            <p class="text-slate-400 text-sm">© {{ date('Y') }} Gezany Moura - Desenvolvimento Comportamental.</p>
+        </div>
+    </footer>
+</x-atlvs.layout.app>
