@@ -231,19 +231,58 @@
                         @php
                             $description = preg_replace('/\s*\[cite:[^\]]+\]/', '', $service->description);
                         @endphp
-                        <article class="flex min-h-72 flex-col rounded-lg border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-xl">
-                            <div class="flex items-center justify-between gap-3">
-                                <x-atlvs.ui.badge variant="info">{{ $service->category }}</x-atlvs.ui.badge>
-                                @if($service->duration)
-                                    <span class="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{{ $service->duration }}</span>
-                                @endif
+                        <article class="flex min-h-72 flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-xl">
+                            @if($service->images->isNotEmpty())
+                                <div
+                                    x-data="{ active: 0, total: {{ $service->images->count() }} }"
+                                    class="relative bg-slate-100"
+                                    aria-label="Fotos de {{ $service->title }}"
+                                >
+                                    <div class="aspect-[4/3] overflow-hidden">
+                                        @foreach($service->images as $image)
+                                            <img
+                                                x-show="active === {{ $loop->index }}"
+                                                @unless($loop->first) x-cloak @endunless
+                                                x-transition.opacity
+                                                src="{{ $image->url }}"
+                                                alt="Foto de {{ $service->title }}"
+                                                class="h-full w-full object-cover"
+                                                loading="lazy"
+                                            >
+                                        @endforeach
+                                    </div>
+
+                                    @if($service->images->count() > 1)
+                                        <button type="button" class="absolute left-3 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-slate-900 shadow hover:bg-white" @click="active = active === 0 ? total - 1 : active - 1" aria-label="Foto anterior">
+                                            <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 0 1-.02 1.06L9.06 10l3.71 3.71a.75.75 0 1 1-1.06 1.06l-4.24-4.24a.75.75 0 0 1 0-1.06l4.24-4.24a.75.75 0 0 1 1.08 0Z" clip-rule="evenodd"/></svg>
+                                        </button>
+                                        <button type="button" class="absolute right-3 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-slate-900 shadow hover:bg-white" @click="active = active === total - 1 ? 0 : active + 1" aria-label="Proxima foto">
+                                            <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 0 1 .02-1.06L10.94 10 7.23 6.29a.75.75 0 1 1 1.06-1.06l4.24 4.24a.75.75 0 0 1 0 1.06l-4.24 4.24a.75.75 0 0 1-1.08 0Z" clip-rule="evenodd"/></svg>
+                                        </button>
+
+                                        <div class="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5">
+                                            @foreach($service->images as $image)
+                                                <button type="button" class="h-2 w-2 rounded-full bg-white/70 ring-1 ring-black/10" :class="{ 'bg-slate-950': active === {{ $loop->index }} }" @click="active = {{ $loop->index }}" aria-label="Ver foto {{ $loop->iteration }}"></button>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
+
+                            <div class="flex flex-1 flex-col p-6">
+                                <div class="flex items-center justify-between gap-3">
+                                    <x-atlvs.ui.badge variant="info">{{ $service->category }}</x-atlvs.ui.badge>
+                                    @if($service->duration)
+                                        <span class="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{{ $service->duration }}</span>
+                                    @endif
+                                </div>
+                                <h3 class="mt-7 text-2xl font-black tracking-tight text-slate-950">{{ $service->title }}</h3>
+                                <p class="mt-4 flex-1 leading-7 text-slate-600">{{ $description }}</p>
+                                <a href="{{ $primaryCtaUrl }}" target="{{ $whatsappUrl ? '_blank' : '_self' }}" rel="{{ $whatsappUrl ? 'noopener noreferrer' : '' }}" class="mt-8 inline-flex items-center gap-2 text-sm font-bold text-sky-700 hover:text-sky-900">
+                                    Conversar sobre esta solucao
+                                    <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.64l-3.22-3.22a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.22-3.22H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
+                                </a>
                             </div>
-                            <h3 class="mt-7 text-2xl font-black tracking-tight text-slate-950">{{ $service->title }}</h3>
-                            <p class="mt-4 flex-1 leading-7 text-slate-600">{{ $description }}</p>
-                            <a href="{{ $primaryCtaUrl }}" target="{{ $whatsappUrl ? '_blank' : '_self' }}" rel="{{ $whatsappUrl ? 'noopener noreferrer' : '' }}" class="mt-8 inline-flex items-center gap-2 text-sm font-bold text-sky-700 hover:text-sky-900">
-                                Conversar sobre esta solucao
-                                <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.64l-3.22-3.22a.75.75 0 1 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.22-3.22H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
-                            </a>
                         </article>
                     @empty
                         <div class="rounded-lg border border-dashed border-slate-300 bg-slate-50 p-8 text-slate-600 md:col-span-2 lg:col-span-3">

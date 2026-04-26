@@ -5,6 +5,8 @@ namespace Tests\Feature\Admin;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class AdminProjectTest extends TestCase
@@ -55,6 +57,8 @@ class AdminProjectTest extends TestCase
 
     public function test_admin_can_create_project(): void
     {
+        Storage::fake('public');
+
         $admin = User::factory()->create(['role' => 'admin']);
 
         $this->actingAs($admin)
@@ -65,6 +69,10 @@ class AdminProjectTest extends TestCase
                 'duration' => '08 horas',
                 'image_path' => null,
                 'is_active' => '1',
+                'images' => [
+                    $this->fakePng('sala-treinamento.png'),
+                    $this->fakePng('workshop.png'),
+                ],
             ])
             ->assertRedirect(route('admin.projects.index'));
 
@@ -73,5 +81,22 @@ class AdminProjectTest extends TestCase
             'category' => 'Workshop',
             'is_active' => true,
         ]);
+
+        $project = Project::query()->where('title', 'Atendimento 5 Estrelas')->firstOrFail();
+
+        $this->assertCount(2, $project->images);
+        $project->images->each(fn ($image) => Storage::disk('public')->assertExists($image->path));
+    }
+
+    private function fakePng(string $name): UploadedFile
+    {
+        $path = tempnam(sys_get_temp_dir(), 'project-image-');
+
+        file_put_contents(
+            $path,
+            base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/p9sAAAAASUVORK5CYII=')
+        );
+
+        return new UploadedFile($path, $name, 'image/png', null, true);
     }
 }

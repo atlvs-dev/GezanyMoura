@@ -14,7 +14,8 @@ class PublicController extends Controller
 
         $services = Project::query()
             ->where('is_active', true)
-            ->select(['title', 'description', 'category', 'duration'])
+            ->with('images')
+            ->select(['id', 'title', 'description', 'category', 'duration'])
             ->latest()
             ->get();
 

@@ -57,6 +57,7 @@
             <th class="px-4 py-3 text-left font-bold">Solucao</th>
             <th class="px-4 py-3 text-left font-bold">Categoria</th>
             <th class="px-4 py-3 text-left font-bold">Duracao</th>
+            <th class="px-4 py-3 text-left font-bold">Fotos</th>
             <th class="px-4 py-3 text-left font-bold">Status</th>
             <th class="px-4 py-3 text-right font-bold">Acoes</th>
           </tr>
@@ -71,6 +72,7 @@
               </td>
               <td class="px-4 py-4 text-slate-700">{{ $project->category }}</td>
               <td class="px-4 py-4 text-slate-600">{{ $project->duration ?: 'A definir' }}</td>
+              <td class="px-4 py-4 text-slate-600">{{ $project->images_count }}</td>
               <td class="px-4 py-4">
                 <x-atlvs.ui.badge :variant="$project->is_active ? 'success' : 'default'">
                   {{ $project->is_active ? 'Ativa' : 'Inativa' }}
@@ -95,7 +97,7 @@
             </tr>
           @empty
             <tr>
-              <td class="px-4 py-14 text-center" colspan="5">
+              <td class="px-4 py-14 text-center" colspan="6">
                 <div class="mx-auto max-w-md">
                   <div class="mx-auto grid h-12 w-12 place-items-center rounded-lg bg-slate-100 text-slate-500">
                     <svg class="h-5 w-5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
