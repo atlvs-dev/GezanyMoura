@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ProjectStoreRequest;
+use App\Http\Requests\Admin\ProjectUpdateRequest;
 use App\Models\Project;
-use App\Http\Requests\ProjectStoreRequest;
-use App\Http\Requests\ProjectUpdateRequest;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -13,14 +13,31 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $q = (string) $request->query('q', '');
+        $category = (string) $request->query('category', '');
+        $status = (string) $request->query('status', '');
 
         $projects = Project::query()
-            ->when($q, fn ($query) => $query->where('name', 'like', "%{$q}%"))
-            ->orderByDesc('id')
-            ->paginate(10)
+            ->select(['id', 'title', 'description', 'category', 'duration', 'is_active', 'updated_at'])
+            ->when($q, function ($query) use ($q) {
+                $query->where(function ($query) use ($q) {
+                    $query->where('title', 'like', "%{$q}%")
+                        ->orWhere('description', 'like', "%{$q}%")
+                        ->orWhere('category', 'like', "%{$q}%");
+                });
+            })
+            ->when($category, fn ($query) => $query->where('category', $category))
+            ->when($status !== '', fn ($query) => $query->where('is_active', $status === 'active'))
+            ->latest('updated_at')
+            ->paginate(8)
             ->withQueryString();
 
-        return view('pages.admin.projects.index', compact('projects', 'q'));
+        $categories = Project::query()
+            ->whereNotNull('category')
+            ->distinct()
+            ->orderBy('category')
+            ->pluck('category');
+
+        return view('pages.admin.projects.index', compact('projects', 'q', 'category', 'status', 'categories'));
     }
 
     public function create()
@@ -34,7 +51,7 @@ class ProjectController extends Controller
 
         return redirect()
             ->route('admin.projects.index')
-            ->with('success', 'Projeto criado com sucesso.');
+            ->with('success', 'Solucao criada com sucesso.');
     }
 
     public function edit(Project $project)
@@ -48,7 +65,7 @@ class ProjectController extends Controller
 
         return redirect()
             ->route('admin.projects.index')
-            ->with('success', 'Projeto atualizado.');
+            ->with('success', 'Solucao atualizada com sucesso.');
     }
 
     public function destroy(Project $project)
@@ -57,6 +74,6 @@ class ProjectController extends Controller
 
         return redirect()
             ->route('admin.projects.index')
-            ->with('success', 'Projeto removido.');
+            ->with('success', 'Solucao removida com sucesso.');
     }
 }

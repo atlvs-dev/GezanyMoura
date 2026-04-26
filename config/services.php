@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'contact' => [
+        'email' => env('CONTACT_EMAIL'),
+        'whatsapp_url' => env('CONTACT_WHATSAPP_URL'),
+        'instagram_url' => env('CONTACT_INSTAGRAM_URL'),
+    ],
+
 ];

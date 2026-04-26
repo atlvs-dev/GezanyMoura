@@ -5,11 +5,11 @@
 ])
 
 @php
-  $base = 'inline-flex items-center justify-center rounded-xl font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60 disabled:pointer-events-none h-10 px-4 text-sm';
+  $base = 'inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60 disabled:pointer-events-none min-h-11 px-5 text-sm';
   $variants = [
-    'primary' => 'bg-gray-900 text-white hover:bg-gray-800 focus:ring-gray-900',
-    'secondary' => 'bg-white text-gray-900 border border-gray-200 hover:bg-gray-50 focus:ring-gray-300',
-    'ghost' => 'bg-transparent text-gray-900 hover:bg-gray-100 focus:ring-gray-300',
+    'primary' => 'bg-slate-950 text-white shadow-sm hover:bg-slate-800 focus:ring-slate-900',
+    'secondary' => 'bg-white text-slate-950 border border-slate-200 shadow-sm hover:bg-slate-50 focus:ring-slate-300',
+    'ghost' => 'bg-transparent text-slate-900 hover:bg-slate-100 focus:ring-slate-300',
     'danger' => 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-600',
   ];
   $cls = $base.' '.($variants[$variant] ?? $variants['primary']);
